@@ -1,9 +1,17 @@
 <template>
-    <NavBar />
+    <div class="flex bg-gray-100">
+        <section>
+            <SideBar />
+        </section>
+        <section class="w-full">
+            <NavBar />
 
-    <section class="px-10 py-5">
-        <slot></slot>
-    </section>
+            <section class="main-content px-10 py-5">
+                <slot></slot>
+            </section>
+        </section>
+
+    </div>
 </template>
 <script>
 import NavBar from '../Components/NavBar.vue';

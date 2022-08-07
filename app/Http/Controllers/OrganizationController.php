@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -149,8 +150,10 @@ class OrganizationController extends Controller
 
         $user = $org->users()->create($input);
         $user->assignRole($role['role']);
-
-        event(new Registered($user));
+ 
+        Password::sendResetLink(
+            $request->only('email')
+        );
 
         return redirect(route('organization.show', $org));
     }

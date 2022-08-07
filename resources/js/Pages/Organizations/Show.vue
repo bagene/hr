@@ -1,6 +1,6 @@
 <template>
 	<div class="flex justify-between">
-  	<h1 v-text="org.name"></h1>
+		<h1 v-text="org.name"></h1>
 		<Link :href="route('organization.edit', org)">Edit</Link>
 	</div>
 

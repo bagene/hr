@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,20 +23,24 @@ Route::post('login', [AuthController::class, 'authenticate'])->name('auth.authen
 Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
 Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 
+Route::get('/password-reset', [AuthController::class, 'reset_password'])->middleware('guest')->name('password.reset');
+Route::post('/password-reset', [AuthController::class, 'reset_password_post'])->name('password.reset.post');
 Route::middleware(['auth'])->group(function () {
-    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/organizations', [OrganizationController::class, 'index'])->name('organization.index');
-    Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organization.create');
-    Route::post('/organizations/create', [OrganizationController::class, 'store'])->name('organization.store');
-    Route::get('/organizations/{org}', [OrganizationController::class, 'show'])->name('organization.show');
-    Route::get('/organizations/{org}/edit', [OrganizationController::class, 'edit'])->name('organization.edit');
-    Route::put('/organizations/{org}', [OrganizationController::class, 'update'])->name('organization.update');
+    Route::prefix('organizations')
+        ->as('organization.')
+        ->group(fn () => require __DIR__.'/organizations.php');
 
-    Route::get('/organizations/{org}/account', [OrganizationController::class, 'create_account'])->name('organization.account.create');
-    Route::post('/organizations/{org}/account', [OrganizationController::class, 'store_account'])->name('organization.account.store');
+    Route::prefix('departments')
+        ->as('department.')
+        ->group(fn () => require __DIR__.'/departments.php');
+
+    Route::prefix('employees')
+        ->as('employee.')
+        ->group(fn () => require __DIR__.'/employees.php');
+    
 });

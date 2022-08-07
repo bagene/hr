@@ -36,11 +36,17 @@ import AuthLayout from '../../layouts/AuthLayout.vue'
 export default {
   components: { FormInput },
   layout: AuthLayout,
+	props: {
+		token: String,
+		email: String,
+	},
 	data() {
 		return {
 			form: useForm({
 				password: '',
 				password_confirmation: '',
+				email: this.email,
+				token: this.token,
 			}),
 		}
 	},
@@ -48,7 +54,7 @@ export default {
 		submit() {
 			const { form, route } = this;
 
-			form.post(route('auth.password'));
+			form.post(route('password.reset.post'));
 		}
 	}
 }
