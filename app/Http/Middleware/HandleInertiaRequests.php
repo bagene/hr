@@ -38,7 +38,10 @@ class HandleInertiaRequests extends Middleware
     {
         $user = $request->user();
         return array_merge(parent::share($request), [
-            'user' => $user
+            'user' => optional($user)->load([
+                'schedule',
+                'schedule.schedule_details',
+            ])
         ]);
     }
 }

@@ -17,9 +17,9 @@ class CreateScheduleDetailsTable extends Migration
             $table->id();
             $table->foreignId('schedule_id')->constrained('schedules')->onDelete('cascade');
             $table->tinyInteger('day')->default(1);
-            $table->time('start');
-            $table->time('end');
-            $table->smallInteger('break');
+            $table->time('start')->nullable();
+            $table->time('end')->nullable();
+            $table->smallInteger('break')->nullable();
             $table->boolean('is_off');
             $table->timestamps();
         });

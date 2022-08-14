@@ -1,7 +1,7 @@
 <template>
   <HContainer>
     <h1 v-text="employee.name"></h1>
-    <span v-text="employee.department.name"></span>
+    <span v-text="employee.department?.name"></span>
   </HContainer>
 
   <HContainer>
@@ -14,6 +14,12 @@
 
       <EProfile 
         v-if="activeTab === 'prof-key'"
+        :profile="employee.profile"
+        />
+
+      <ETimeAttendance
+        v-if="activeTab === 'time-att-key'"
+        :schedule="employee.schedule"
         />
     </TabContainer>
   </HContainer>
@@ -21,12 +27,14 @@
 
 <script>
 import EProfile from '../../Components/Employees/EProfile.vue';
+import ETimeAttendance from '../../Components/Employees/ETimeAttendance.vue';
 import HContainer from '../../Components/HContainer.vue'
 import TabContainer from '../../Components/TabContainer.vue'
 export default {
-  components: { HContainer, TabContainer, EProfile },
+  components: { HContainer, TabContainer, EProfile, ETimeAttendance },
   props: {
     employee: Object,
+    user: Object,
   },
   data() {
     return {

@@ -43,4 +43,7 @@ Route::middleware(['auth'])->group(function () {
         ->as('employee.')
         ->group(fn () => require __DIR__.'/employees.php');
     
+    Route::prefix('schedules')
+        ->as('schedule.')
+        ->group(fn () => require __DIR__.'/schedules.php');
 });

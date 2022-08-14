@@ -23,7 +23,7 @@ export default {
 			default: 'text',
 		},
 		placeholder: String,
-		modelValue: String || Number,
+		modelValue: String | Number,
 		error: String,
 	},
 	emits: ['update:modelValue', 'clearError'],

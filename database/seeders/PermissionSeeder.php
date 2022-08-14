@@ -26,6 +26,7 @@ class PermissionSeeder extends Seeder
             'organization' => self::PERMISSION_NAMES,
             'employee' => self::PERMISSION_NAMES,
             'department' => self::PERMISSION_NAMES,
+            'schedule' => self::PERMISSION_NAMES,
         ];
 
         foreach($allPermissions as $idx => $permissions) {
@@ -35,7 +36,7 @@ class PermissionSeeder extends Seeder
             }
         }
 
-        foreach(Arr::only($allPermissions, ['employee', 'department']) as $idx => $permissions) {
+        foreach(Arr::only($allPermissions, ['employee', 'department', 'schedule']) as $idx => $permissions) {
             foreach($permissions as $permission) {
                 $oAdmin->givePermissionTo("{$idx}.$permission");
             }

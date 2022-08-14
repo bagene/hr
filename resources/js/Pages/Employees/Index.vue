@@ -15,7 +15,7 @@
 		<tbody>
 			<tr v-for="employee in employees" :key="employee.id">
 				<td class="border border-slate-700 p-2" v-text="employee.name"></td>
-        <td class="border border-slate-700 p-2" v-text="employee.department.name"></td>
+        <td class="border border-slate-700 p-2" v-text="employee.department?.name"></td>
 				<td class="border border-slate-700 p-2" v-text="employee.role.name"></td>
         <td class="align-center"><Link :href="route('employee.show', employee)">View</Link></td>
 			</tr>

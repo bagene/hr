@@ -10,10 +10,15 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $employees = $request->user()
-            ->organization
-            ->users
-            ->load('department');
+        $user = $request->user();
+
+        if($user->hasRole('superadmin')) {
+            return Inertia::render('Employees/Index', [
+                'employees' => User::all()->load('department'),
+            ]);
+        }
+        
+        $employees = $user->organization->users->load('department');
 
         return Inertia::render('Employees/Index', compact('employees'));
     }
@@ -21,7 +26,12 @@ class EmployeeController extends Controller
     public function show(User $employee)
     {
         return Inertia::render('Employees/Show', [
-            'employee' => $employee->load('department'),
+            'employee' => $employee->load([
+                'department',
+                'profile' => fn($q) => $q->exclude(['id','created_at','updated_at']),
+                'schedule',
+                'schedule.schedule_details',
+            ]),
         ]);
     }
 }

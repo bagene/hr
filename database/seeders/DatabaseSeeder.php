@@ -30,9 +30,12 @@ class DatabaseSeeder extends Seeder
         Organization::factory(20)->create()->each(function ($org) {
             $roles = ['admin', 'employee'];
             $users = \App\Models\User::factory(10)
+                ->hasProfile()
                 ->create()
                 ->each(fn ($user) => $user->assignRole($roles[rand(0,1)]));
             $org->users()->saveMany($users);
         });
+
+        $this->call(ScheduleSeeder::class);
     }
 }
